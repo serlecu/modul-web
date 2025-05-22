@@ -1,41 +1,19 @@
-import { useState } from 'react';
 import logo from '@/assets/logo.png';
 import styles from './index.module.css';
+import Box from '@/components/Box/box';
 
 export default function IndexPage() {
-  const [count, setCount] = useState(1);
-  const updateCount = () => setCount((c) => c + 1);
-
   return (
     <div className={styles.app}>
       <header>
         <img src={logo} alt="logo" />
-        <p>
-          Hello ice.js 3
-        </p>
+        <nav>
+          <Box boxWidth={96} boxHeight={24} />
+        </nav>
       </header>
       <main>
-        <button className={styles.button} type="button" onClick={updateCount}>
-          👍🏻 {count}
-        </button>
         <p>
-          <a
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.link}
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            href="https://v3.ice.work/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.link}
-          >
-            Learn ice.js
-          </a>
+          Hello
         </p>
       </main>
     </div>
