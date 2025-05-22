@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    [
+      "build-plugin-ice-i18n", {
+        "locales": ["es", "en-GB"],
+        "defaultLocale": "es",
+        "i18nRouting": true
+      }
+    ]
+  ]
+}
