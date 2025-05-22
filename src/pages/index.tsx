@@ -1,6 +1,6 @@
 import logo from '@/assets/logo.png';
 import styles from './index.module.css';
-import Box from '@/components/Box/box';
+import Box from '../components/Box/Box.tsx';
 
 export default function IndexPage() {
   return (
