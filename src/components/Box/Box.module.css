@@ -19,4 +19,5 @@
 
 svg {
   shape-rendering: geometricPrecision;
+  overflow: visible;
 }

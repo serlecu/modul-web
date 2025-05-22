@@ -5,6 +5,7 @@ interface BoxProps {
   boxHeight: number;
   strokeWidth?: number;
   notchSize?: number;
+  displace?: boolean;
 }
 
 export default function Box({
@@ -12,16 +13,17 @@ export default function Box({
   boxHeight,
   strokeWidth = 2,
   notchSize = 16,
+  displace = false,
 }: BoxProps) {
 
   const points1 = `
-    ${Math.round(strokeWidth*0.5)},${0 + notchSize} 
-    ${0 + notchSize},${Math.round(strokeWidth*0.5)}
-    ${boxWidth - Math.round(strokeWidth*0.5)},${Math.round(strokeWidth*0.5)}
-    ${boxWidth - Math.round(strokeWidth*0.5)} ,${boxHeight - notchSize} 
-    ${boxWidth - notchSize},${boxHeight - Math.round(strokeWidth*0.5)} 
-    ${Math.round(strokeWidth*0.5)},${boxHeight - Math.round(strokeWidth*0.5)} 
-    ${Math.round(strokeWidth*0.5)},${0 + notchSize} 
+    0, ${notchSize} 
+    ${notchSize}, 0
+    ${boxWidth}, 0
+    ${boxWidth} ,${boxHeight - notchSize} 
+    ${boxWidth - notchSize},${boxHeight} 
+    0 ,${boxHeight} 
+    0, ${0 + notchSize} 
   `;
 
   return (
@@ -29,7 +31,11 @@ export default function Box({
       <svg
         width={boxWidth}
         height={boxHeight}
-        viewBox={`0 0 ${boxWidth} ${boxHeight}`}
+        viewBox={
+          `${displace? 0-(notchSize-strokeWidth) : '0'} 
+          0 
+          ${displace? boxWidth-(notchSize-strokeWidth) : boxWidth} 
+          ${boxHeight}`}
       >
         <polygon
           points={points1}
