@@ -6,6 +6,8 @@ interface BoxProps {
   strokeWidth?: number;
   notchSize?: number;
   displace?: boolean;
+  content?: JSX.Element | undefined;
+  layer?: number;
 }
 
 export default function Box({
@@ -14,6 +16,8 @@ export default function Box({
   strokeWidth = 2,
   notchSize = 16,
   displace = false,
+  content = undefined,
+  layer = 0,
 }: BoxProps) {
 
   const points1 = `
@@ -27,23 +31,27 @@ export default function Box({
   `;
 
   return (
-    <div className={styles.notched} style={{ width: boxWidth, height: boxHeight }}>
+    <div className={styles.notchedBox} style={{ width: (boxWidth-notchSize), height: boxHeight-notchSize, zIndex: layer+1}}>
       <svg
         width={boxWidth}
         height={boxHeight}
         viewBox={
-          `${displace? 0-(notchSize-strokeWidth) : '0'} 
-          0 
-          ${displace? boxWidth-(notchSize-strokeWidth) : boxWidth} 
-          ${boxHeight}`}
+          `
+          ${0 + Math.round(notchSize * 0.5 )},
+          ${0 - Math.round(notchSize * 0.5)},
+          ${boxWidth},
+          ${boxHeight}
+          `
+        }
       >
         <polygon
           points={points1}
-          fill='#FFFFFF'
+          fill='#FFFFFFFF'
           stroke='#000000'
           strokeWidth={strokeWidth}
         />
       </svg>
+      {content}
     </div>
   );
 }

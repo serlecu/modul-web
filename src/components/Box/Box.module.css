@@ -1,23 +1,17 @@
-.notched {
-  /* position: relative; */
-  /* overflow: hidden; */
-  /* background-color: var(--bg-primary);
-  border: 2px solid var(--primary); */
+.notchedBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--primary); /* for debug */
 }
 
-/* .notched::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  left: 0;
-  border-width: 9px 9px 9px 9px;
-  border-color: var(--primary) transparent transparent var(--primary);
-} */
+.notchedBox > * {
+  z-index: inherit;
+}
 
-svg {
+.notchedBox > svg {
+  position: absolute;
   shape-rendering: geometricPrecision;
   overflow: visible;
+  /* opacity: 50%; */
 }
