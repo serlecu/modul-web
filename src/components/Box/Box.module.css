@@ -1,0 +1,17 @@
+.notchedBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--primary); /* for debug */
+}
+
+.notchedBox > * {
+  z-index: inherit;
+}
+
+.notchedBox > svg {
+  position: absolute;
+  shape-rendering: geometricPrecision;
+  overflow: visible;
+  /* opacity: 50%; */
+}
