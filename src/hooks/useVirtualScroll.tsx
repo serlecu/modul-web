@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export default function useVirtualScroll() {
+export default function useVirtualScroll(lowThresh = 0, highThresh = 100) {
   // --- Virtual Scroll Area ---
   let counter = 0;
   let isDragging = false;
@@ -16,6 +16,11 @@ export default function useVirtualScroll() {
     document.addEventListener('wheel', (event) => {
       event.preventDefault();
       counter += Math.sign(event.deltaY);
+      if (counter < lowThresh) {
+        counter = lowThresh;
+      } else if (counter > highThresh) {
+        counter = highThresh;
+      }
       updateCounter();
     }, { passive: false });
 
@@ -31,6 +36,11 @@ export default function useVirtualScroll() {
       event.preventDefault();
       const deltaY = startY - event.touches[0].clientY; // Vertical drag distance
       counter += Math.sign(deltaY);
+      if (counter < lowThresh) {
+        counter = lowThresh;
+      } else if (counter > highThresh) {
+        counter = highThresh;
+      }
       startY = event.touches[0].clientY;
       updateCounter();
     });

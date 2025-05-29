@@ -8,7 +8,7 @@ export default function IndexPage() {
   const c2 = <p style={{ zIndex: '10' }}>2</p>;
   const c3 = <p style={{ zIndex: '10' }}>3</p>;
 
-  useVirtualScroll();
+  useVirtualScroll(0, 200);
 
   return (
     <div className={styles.app}>
