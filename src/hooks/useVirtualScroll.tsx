@@ -1,10 +1,21 @@
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function useVirtualScroll(lowThresh = 0, highThresh = 100) {
+/*
+  Hay un conflicto con usestate y los eventos de scroll.
+  Si se usa useState, el scroll no funciona correctamente.
+*/
+
+export default function useVirtualScroll(
+  lowThresh = 0,
+  highThresh = 100,
+  // setter: React.Dispatch<React.SetStateAction<number>>
+  ): [number, React.Dispatch<React.SetStateAction<number>>] {
   // --- Virtual Scroll Area ---
   let counter = 0;
   let isDragging = false;
   let startY = 0;
+
+  const [vScrollPos, setVScrollPos] = useState(() => 0);
 
   useEffect(() => {
     initializeVirtualScroll();
@@ -21,37 +32,40 @@ export default function useVirtualScroll(lowThresh = 0, highThresh = 100) {
       } else if (counter > highThresh) {
         counter = highThresh;
       }
-      updateCounter();
+      // setVScrollPos(counter);
+      // updateCounter(counter);
     }, { passive: false });
 
-    // --- Mobile: Touch Events ---
     document.addEventListener('touchstart', (event) => {
       isDragging = true;
       startY = event.touches[0].clientY;
-      console.log('Touch start at:', startY);
     });
 
     document.addEventListener('touchmove', (event) => {
-      if (!isDragging) return;
-      event.preventDefault();
-      const deltaY = startY - event.touches[0].clientY; // Vertical drag distance
-      counter += Math.sign(deltaY);
-      if (counter < lowThresh) {
-        counter = lowThresh;
-      } else if (counter > highThresh) {
-        counter = highThresh;
+      if (isDragging) {
+        event.preventDefault();
+        const deltaY = startY - event.touches[0].clientY; // Vertical drag distance
+        counter += Math.sign(deltaY);
+        if (counter < lowThresh) {
+          counter = lowThresh;
+        } else if (counter > highThresh) {
+          counter = highThresh;
+        }
+        startY = event.touches[0].clientY;
       }
-      startY = event.touches[0].clientY;
-      updateCounter();
     });
 
     document.addEventListener('touchend', () => {
       isDragging = false;
-      console.log('Touch end');
     });
   }
 
-  function updateCounter() {
-    console.log('Counter:', counter);
+  function updateCounter(newCounter) {
+    // Aquí puedes actualizar el estado o hacer algo con el nuevo valor de counter
+    // setter(newCounter);
+    // setVScrollPos(newCounter);
+    console.log('Counter updated:', newCounter);
   }
+
+  return [vScrollPos, setVScrollPos] as const;
 }
