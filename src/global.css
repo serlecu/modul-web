@@ -3,8 +3,12 @@
  * ice.js will globally import this file by default.
  */
 :root {
-  --primary: #3178f6;
-  --bg-primary: white;
+  --primary: #FFFFFF;
+  --accent-section: #FFFFFF;
+  --accent_bg: #555555;
+
+  --bg-primary: black;
+  --bg-secondary: #222222;
 }
 
 body {
