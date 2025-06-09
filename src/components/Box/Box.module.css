@@ -1,4 +1,5 @@
 .notchedBox {
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,9 +10,29 @@
   z-index: inherit;
 }
 
-.notchedBox > svg {
+.notchedBox svg {
   position: absolute;
   shape-rendering: geometricPrecision;
   overflow: visible;
   /* opacity: 50%; */
+}
+
+.polyDefault {
+  fill: var(--bg-primary);
+  stroke: var(--accent-section);
+}
+
+.bgBox {
+  fill: var(--bg-secondary);
+  stroke: var(--accent_bg);
+}
+
+.logoM {
+  fill: var(--accent-section);
+  stroke: var(--accent-section);
+}
+
+.logoName {
+  fill: var(--bg-primary);
+  stroke: var(--accent-section);
 }
