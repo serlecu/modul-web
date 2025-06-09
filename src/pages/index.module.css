@@ -56,3 +56,7 @@
   color: white;
   font-size: calc(10px + 2vmin);
 }
+
+section {
+  position: absolute;
+}
