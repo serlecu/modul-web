@@ -177,6 +177,8 @@ About.json
 ```md
 - Components  
 [ ] - Box  
+[ ] --- GetContentSize (useRef)
+[ ] --- GetSizeFromSibling
 [ ] - Nav / Menu  
 [ ] - SectionLogo  
 [ ] - PanelBox  
@@ -194,7 +196,7 @@ About.json
 - Logic  
 [ ] - Scroll Navigation  
 [ ] - Jump to ScrollPoint  
-[ ] - Scroll to Top  
+[ ] - Populate from JSON
 [ ] - Return (breadcrumbs)  
 [ ] - Lazy Load  
 [ ] - Section Animation  
