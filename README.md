@@ -100,7 +100,8 @@ Events.json
     }
   ]
 }
-
+```
+```md
 Merch.json
 {
   "merch": [
@@ -142,7 +143,8 @@ Merch.json
     }
   ]
 }
-
+```
+```md
 About.json
 {
   "about": [
@@ -170,3 +172,45 @@ About.json
   ]
 }
 ```
+
+## ToDo
+```md
+- Components  
+[ ] - Box  
+[ ] - Nav / Menu  
+[ ] - SectionLogo  
+[ ] - PanelBox  
+[ ] - ScrollHint  
+[ ] - EventsListCard  
+[ ] - EventsList  
+[ ] - EventImgCarrousel  
+[ ] - EventImgNext/Prev  
+[ ] - EventPlayer  
+[ ] - MerchMenu  
+[ ] - MerchCarrousel  
+[ ] - MerchCard  
+```
+```md
+- Logic  
+[ ] - Scroll Navigation  
+[ ] - Jump to ScrollPoint  
+[ ] - Scroll to Top  
+[ ] - Return (breadcrumbs)  
+[ ] - Lazy Load  
+[ ] - Section Animation  
+```
+```md
+- Pages  
+[ ] - Landing / Home  
+[ ] --- Hero  
+[ ] --- Events  
+[ ] --- About  
+[ ] --- Contact  
+[ ] - Event  
+[ ] --- Event home  
+[ ] --- Event details  
+[ ] --- Event img carrousel  
+[ ] --- Event player  
+[ ] - Merch   
+[ ] --- Merch menu  
+``` 
