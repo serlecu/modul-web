@@ -2,11 +2,26 @@
  * The global.css defines the style of the entire project,
  * ice.js will globally import this file by default.
  */
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&display=swap');
+
 :root {
-  --primary: #3178f6;
-  --bg-primary: white;
+  --primary: #FFFFFF;
+  --accent-section: #FFFFFF;
+  --accent-section-main: #FFFFFF;
+  --accent-section-red: #EF3B39;
+  --accent-section-blue: #23B0E6;
+  --accent-section-yellow: #F6C514;
+  --accent_bg: #555555;
+
+  --bg-primary: black;
+  --bg-secondary: #222222;
+
+  --font-display: 'Doto', sans-serif;
+  --font-text: 'Chakra Petch', sans-serif;
+  --family-menu-buttons: 'Doto', sans-serif;
 }
 
 body {
   margin: 0;
+  padding: 0;
 }
