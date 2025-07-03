@@ -1,0 +1,57 @@
+.navContainer {
+  position: fixed;
+  z-index: 99;
+  width: fit-content;
+  height: fit-content;
+  display: inline-block;
+
+  border: 1px solid green;
+}
+
+.navContainer > * {
+  z-index: inherit;
+}
+
+.navContainer > h1 {
+  width: 'auto';
+  height: 'auto';
+  margin: 0;
+
+  color: aliceblue;
+  font-family: var(--family-menu-buttons);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.logo {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  object-fit: contain;
+}
+
+.subtitle {
+  color: var(--primary);
+  font-family: var(--family-menu-buttons);
+  font-size: 0.8rem;
+}
+
+.navButtonsList {
+  position: inherit;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: right;
+  gap: 1rem;
+  padding: .4rem;
+  margin: 0;
+  height: fit-content;
+  width: fit-content;
+  list-style: none;
+}
+.navButtonsList li {
+  color: aliceblue;
+  font-family: var(--family-menu-buttons);
+  font-size: 1rem;
+  font-weight: 600;
+}
