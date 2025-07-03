@@ -1,0 +1,18 @@
+.contacto {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.mokeContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: -5rem;
+}
+
+.mokeContainer img {
+  margin: 0 -1rem;
+}
