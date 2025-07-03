@@ -1,4 +1,5 @@
 .notchedBox {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,3 +16,92 @@
   overflow: visible;
   /* opacity: 50%; */
 }
+
+.boxContent {
+  margin: 0;
+  padding: 0;
+  width: fit-content;
+  height: fit-content;
+}
+
+.polyDefault {
+  fill: var(--bg-primary);
+  stroke: var(--accent-section-main);
+}
+.poly-fill-default {
+  fill: var(--accent-section-main);
+  stroke: var(--accent-section-main);
+  color: var(--primary);
+}
+.poly-stroke-default {
+  fill: var(--bg-primary);
+  stroke: var(--accent-section-main);
+  color: var(--primary);
+}
+.poly-fill-bg {
+  fill: var(--bg-primary);
+  stroke: var(--accent_bg);
+}
+.poly-stroke-bg{
+  fill: var(--bg-primary);
+  stroke: var(--accent_bg);
+}
+.poly-fill-live {
+  fill: var(--accent-section-red);
+  stroke: var(--accent-section-red);
+  color: var(--primary);
+}
+.poly-stroke-live {
+  fill: var(--bg-primary);
+  stroke: var(--accent-section-red);
+  color: var(--primary);
+}
+.poly-fill-edu {
+  fill: var(--accent-section-blue);
+  stroke: var(--accent-section-blue);
+  color: var(--primary);
+}
+.poly-stroke-edu {
+  fill: var(--bg-primary);
+  stroke: var(--accent-section-blue);
+  color: var(--primary);
+}
+.poly-fill-comm {
+  fill: var(--accent-section-yellow);
+  stroke: var(--accent-section-yellow);
+  color: var(--primary);
+}
+.poly-stroke-comm {
+  fill: var(--bg-primary);
+  stroke: var(--accent-section-yellow);
+  color: var(--primary);
+}
+
+.bgBox {
+  fill: var(--bg-secondary);
+  stroke: var(--accent_bg);
+}
+
+.logoM {
+  fill: var(--accent-section);
+  stroke: var(--accent-section);
+}
+
+.logoName {
+  fill: var(--bg-primary);
+  stroke: var(--accent-section);
+}
+
+.panelBox {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  
+  fill: var(--bg-primary);
+  stroke: var(--accent-section);
+}
+
