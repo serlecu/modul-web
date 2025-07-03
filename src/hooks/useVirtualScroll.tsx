@@ -19,7 +19,7 @@ export default function useVirtualScroll(
 
   useEffect(() => {
     initializeVirtualScroll();
-  });
+  }, []);
 
 
   function initializeVirtualScroll() {
@@ -32,7 +32,7 @@ export default function useVirtualScroll(
       } else if (counter > highThresh) {
         counter = highThresh;
       }
-      // setVScrollPos(counter);
+      setVScrollPos(counter);
       // updateCounter(counter);
     }, { passive: false });
 
@@ -52,6 +52,7 @@ export default function useVirtualScroll(
           counter = highThresh;
         }
         startY = event.touches[0].clientY;
+        setVScrollPos(counter);
       }
     });
 
