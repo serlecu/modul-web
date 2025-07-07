@@ -1,31 +1,58 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo, forwardRef } from 'react';
 import Box from '../Box/Box';
 import styles from './LogoSection.module.css';
+import logo from '../../assets/m.svg';
 
 const emptyDOMRect = new DOMRect(0, 0, 0, 0);
 
+/**
+ * Component that displays a logo and title in a styled box.
+ *
+ * @param top - The top position of the logo section in pixels as Y position.
+ * @param left - The left position of the logo section in pixels as X position.
+ * @param section - The section type for color styling the box.
+ */
 export default function LogoSection({
   width = 460,
   height = 94,
   top = 0,
   left = 0,
+  title = 'modul',
   section = 'default',
 }: {
   width: number;
   height: number;
   top: number;
   left: number;
+  title: string;
   section: 'default' | 'bg' | 'live' | 'edu' | 'comm';
 }) {
-  const notchSize = 16;
-  const zeroX = width / 2;
-  const zeroY = height / 2;
-  const boxHeight = height - notchSize;
-  const logoWidth = 180; // Width of the 'M' logo box
-  const logoHeight = 180; // Height of the 'M' logo box
+  const notch = 16;
+  const boxHeight = height - notch;
+  const logoWidth = height * 0.5; // Width of the 'M' logo box
+
+  const logoContent = useMemo(() =>
+    (<img
+      src={logo}
+      alt="modul logo"
+      style={{
+        position: 'relative',
+        padding: `${logoWidth * 0.375}px ${logoWidth * 0.125}px ${logoWidth * 0.375}px ${logoWidth * 0.375}px`,
+        width: logoWidth }}
+    />),
+    []);
+  const titleContent = useMemo(() =>
+    (
+      <h1 className={styles[`title-${section}`]}>
+        {title}
+      </h1>
+    ),
+    []);
 
   const refLogo = useRef<HTMLImageElement>(null);
+  const refTitle = useRef<HTMLImageElement>(null);
   const [logoRect, setLogoRect] = useState<DOMRect>(emptyDOMRect);
+  const [titleRect, setTitleRect] = useState<DOMRect>(emptyDOMRect);
 
   useEffect(() => {
     if (refLogo.current) {
@@ -44,46 +71,67 @@ export default function LogoSection({
     }
   }, []);
 
+  useEffect(() => {
+    if (refLogo.current) {
+      const updateRect = () => {
+        const titleRect = refLogo.current!.getBoundingClientRect() || emptyDOMRect;
+        setTitleRect(titleRect);
+      };
+      // Set the initial height
+      updateRect();
+      // Create a ResizeObserver to update the height on resize
+      const resizeTitle = new ResizeObserver(updateRect);
+      resizeTitle.observe(refLogo.current!);
+      return () => {
+        resizeTitle.disconnect();
+      };
+    }
+  }, []);
+
   return (
     <div
       className={styles.logoSection}
       style={{
-        width: width,
-        height: height,
+        width: logoRect.width + titleRect.width,
+        height: logoRect.height + notch * 4,
         top: top,
         left: left,
       }}
     >
-      <Box // LOGO_M
+      <Box
+        key={'hl-logo'}
         ref={refLogo}
-        boxWidth={180}
-        boxHeight={boxHeight}
-        strokeWidth={2}
+        boxWidth={'auto'}
+        boxHeight={'auto'}
+        strokeWidth={1}
+        notchSize={notch}
         layer={1}
-        posX={notchSize}
-        posY={notchSize * 2}
-        content={<p>M</p>}
+        posX={notch}
+        posY={notch * 2}
         section={section}
+        content={
+          logoContent
+        }
       />
       <Box // LOGO_Meka
+        ref={refTitle}
         boxWidth={width - logoWidth}
-        boxHeight={boxHeight}
-        strokeWidth={2}
-        content={<p>meka</p>}
+        boxHeight={boxHeight + notch}
+        strokeWidth={1}
+        content={titleContent}
         layer={1}
-        posX={notchSize + logoWidth}
-        posY={0}
+        posX={logoRect.width + notch * 2 - 2}
+        posY={-logoRect.height + notch}
         section={section}
       />
       <Box
         key={'mainBoxHeight'}
-        boxWidth={0}
-        boxHeight={0}
-        strokeWidth={0}
+        boxWidth={titleRect.width}
+        boxHeight={notch * 3}
+        strokeWidth={1}
         layer={0}
-        content={<></>}
-        posX={notchSize}
-        posY={0}
+        posX={logoRect.width + notch * 2 - 2}
+        posY={-logoRect.height + notch * 2}
         section="bg"
       />
     </div>
