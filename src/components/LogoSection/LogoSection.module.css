@@ -4,3 +4,27 @@
   flex-direction: row; */
   margin: 0;
 }
+
+h1 {
+  font-family: var(--font-title);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.title-default {
+  color: var(--accent-section-main);
+}
+.title-bg {
+  color: var(--accent_bg);
+}
+.title-live {
+  color: var(--accent-section-re);
+}
+.title-edu {
+  color: var(--accent-section-blue);
+}
+.title-comm {
+  color: var(--accent-section-yellow);
+}

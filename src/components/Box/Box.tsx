@@ -113,8 +113,8 @@ function Box(
         <polygon
           className={polyClass}
           points={points1}
-          fill='#FFFFFFFF'
-          stroke='#000000'
+          fill="#FFFFFFFF"
+          stroke="#000000"
           strokeWidth={strokeWidth}
         />
       </svg>

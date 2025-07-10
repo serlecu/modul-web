@@ -6,17 +6,27 @@ import logo from '../../assets/m.svg';
 interface NavProps {
   posX: number;
   posY: number;
-  scrollSetter;
+  scrollSetter: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const emptyDOMRect = new DOMRect(0, 0, 0, 0);
 
+/**
+ * Navigation component that displays a logo, subtitle, and navigation buttons.
+ * Should be used in the index page of the application.
+ *
+ * @param posX - The x-coordinate position of the navigation bar.
+ * @param posY - The y-coordinate position of the navigation bar.
+ * @param scrollSetter - The setter of a useState hook to control the scroll position, that
+ * will be used to scroll to different sections of the page when the buttons are clicked.
+ */
 export default function Nav({
   posX,
   posY,
   scrollSetter,
 }: NavProps) {
   const notch = 8;
+  const logoWidth = 48; // Width in px of the logo (m) inside the box
 
   const refLogo = useRef<HTMLImageElement>(null);
   const refSubtitle = useRef<HTMLParagraphElement>(null);
@@ -32,8 +42,8 @@ export default function Nav({
       alt="modul logo"
       style={{
         position: 'relative',
-        padding: '18px 6px 18px 18px',
-        width: 48 }}
+        padding: `${logoWidth * 0.375}px ${logoWidth * 0.125}px ${logoWidth * 0.375}px ${logoWidth * 0.375}px`,
+        width: logoWidth }}
     />),
     []);
   // Content for the navigation buttons
@@ -122,7 +132,7 @@ export default function Nav({
       </h1>
       <Box
         key={'nav-bg-01'}
-        boxWidth={68}
+        boxWidth={logoRect.width + notch * 2}
         boxHeight={notch * 4}
         strokeWidth={1}
         notchSize={notch}
