@@ -2,6 +2,12 @@
  * The global.css defines the style of the entire project,
  * ice.js will globally import this file by default.
  */
+@font-face {
+  font-family: 'Mon Hugo';
+  src: url('./assets/MonHugo-in.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
 @import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&display=swap');
 
 :root {
@@ -17,6 +23,7 @@
   --bg-secondary: #222222;
 
   --font-display: 'Doto', sans-serif;
+  --font-title: 'Mon Hugo', sans-serif;
   --font-text: 'Chakra Petch', sans-serif;
   --family-menu-buttons: 'Doto', sans-serif;
 }
