@@ -34,10 +34,10 @@ function BoxM(
    }: BoxMProps,
    ref: React.Ref<HTMLDivElement>,
 ) {
-  const padTop = logoSize * 0.48;
-  const padRight = logoSize * 0.13;
-  const padBot = logoSize * 0.48;
-  const padLeft = logoSize * 0.435;
+  const padTop = Math.round(logoSize * 0.48);
+  const padRight = Math.round(logoSize * 0.13);
+  const padBot = Math.round(logoSize * 0.48);
+  const padLeft = Math.round(logoSize * 0.435);
   const padding = `${padTop}px ${padRight}px ${padBot}px ${padLeft}px`;
   let imgVer: string = mFill;
 
@@ -65,7 +65,7 @@ function BoxM(
         width={`${logoSize}px`}
         height={`${logoSize}px`}
         style={{
-          padding: padding,
+          margin: padding,
         }}
       />
     );

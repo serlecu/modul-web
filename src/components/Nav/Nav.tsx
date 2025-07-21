@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Box from '../Box/Box';
 import styles from './Nav.module.css';
-import useRectRef from '@/hooks/useRectRef2';
+import useRectRef from '@/hooks/useRectRef';
 import BoxM from '../pure/BoxM/BoxM';
 
 interface NavProps {

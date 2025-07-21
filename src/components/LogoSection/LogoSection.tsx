@@ -1,9 +1,18 @@
 import React, { useEffect, useRef, useState, useMemo, forwardRef } from 'react';
 import Box from '../Box/Box';
+import BoxM from '../pure/BoxM/BoxM';
+import BoxTitleBig from '../pure/BoxTitleBig/BoxTitleBig';
+import useRectRef from '@/hooks/useRectRef';
 import styles from './LogoSection.module.css';
-import logo from '../../assets/m.svg';
+import { sectionColor } from '../pure/BoxTitleBig/BoxTitleBig';
 
-const emptyDOMRect = new DOMRect(0, 0, 0, 0);
+interface LogoSectionProps {
+  top: number;
+  left: number;
+  title: string;
+  section: 'default' | 'live' | 'edu' | 'comm';
+  subtitle?: string | null; // Optional subtitle for the logo section
+}
 
 /**
  * Component that displays a logo and title in a styled box.
@@ -12,128 +21,98 @@ const emptyDOMRect = new DOMRect(0, 0, 0, 0);
  * @param left - The left position of the logo section in pixels as X position.
  * @param section - The section type for color styling the box.
  */
-export default function LogoSection({
-  width = 460,
-  height = 94,
+function LogoSection({
   top = 0,
   left = 0,
   title = 'modul',
   section = 'default',
-}: {
-  width: number;
-  height: number;
-  top: number;
-  left: number;
-  title: string;
-  section: 'default' | 'bg' | 'live' | 'edu' | 'comm';
-}) {
-  const notch = 16;
-  const boxHeight = height - notch;
-  const logoWidth = height * 0.5; // Width of the 'M' logo box
+  subtitle = null,
+}: LogoSectionProps,
+  ref: React.Ref<HTMLDivElement>,
+) {
+  const notch = 24;
 
-  const logoContent = useMemo(() =>
-    (<img
-      src={logo}
-      alt="modul logo"
-      style={{
-        position: 'relative',
-        padding: `${logoWidth * 0.375}px ${logoWidth * 0.125}px ${logoWidth * 0.375}px ${logoWidth * 0.375}px`,
-        width: logoWidth }}
-    />),
-    []);
-  const titleContent = useMemo(() =>
-    (
-      <h1 className={styles[`title-${section}`]}>
-        {title}
-      </h1>
-    ),
-    []);
+  // const [logoRect, refLogo] = useRectRef<HTMLDivElement>();
+  // const [titleRect, refTitle] = useRectRef<HTMLDivElement>();
+  const [logoWidth, logoHeight, logoTop, logoLeft, refLogo] = useRectRef<HTMLDivElement>(100, 100);
+  const [titleWidth, titleHeight, titleTop, titleLeft, refTitle] = useRectRef<HTMLDivElement>(100, 100);
+  const [subtitleWidth, subtitleHeight, subtitleTop, subtitleLeft, refSubtitle] = useRectRef<HTMLDivElement>(100, 100);
+  const [bgWidth, bgHeight, bgTop, bgLeft, refBgLogo] = useRectRef<HTMLDivElement>(100, 100);
 
-  const refLogo = useRef<HTMLImageElement>(null);
-  const refTitle = useRef<HTMLImageElement>(null);
-  const [logoRect, setLogoRect] = useState<DOMRect>(emptyDOMRect);
-  const [titleRect, setTitleRect] = useState<DOMRect>(emptyDOMRect);
-
-  useEffect(() => {
-    if (refLogo.current) {
-      const updateRect = () => {
-        const logoRect = refLogo.current!.getBoundingClientRect() || emptyDOMRect;
-        setLogoRect(logoRect);
-      };
-      // Set the initial height
-      updateRect();
-      // Create a ResizeObserver to update the height on resize
-      const resizeLogo = new ResizeObserver(updateRect);
-      resizeLogo.observe(refLogo.current!);
-      return () => {
-        resizeLogo.disconnect();
-      };
-    }
-  }, []);
-
-  useEffect(() => {
-    if (refLogo.current) {
-      const updateRect = () => {
-        const titleRect = refLogo.current!.getBoundingClientRect() || emptyDOMRect;
-        setTitleRect(titleRect);
-      };
-      // Set the initial height
-      updateRect();
-      // Create a ResizeObserver to update the height on resize
-      const resizeTitle = new ResizeObserver(updateRect);
-      resizeTitle.observe(refLogo.current!);
-      return () => {
-        resizeTitle.disconnect();
-      };
-    }
-  }, []);
 
   return (
     <div
+      ref={ref}
       className={styles.logoSection}
       style={{
-        width: logoRect.width + titleRect.width,
-        height: logoRect.height + notch * 4,
+        position: 'relative',
+        display: 'block',
         top: top,
         left: left,
+        padding: `${0}px ${0}px`,
+        width: `${logoWidth + titleWidth + notch * 2}px`,
+        height: `${logoHeight + subtitleHeight + notch * 3}px`,
       }}
     >
-      <Box
-        key={'hl-logo'}
+      <BoxM
+        // key={'logoBox'}
         ref={refLogo}
-        boxWidth={'auto'}
-        boxHeight={'auto'}
-        strokeWidth={1}
+        posX={notch}
+        posY={0}
+        logoSize={98}
         notchSize={notch}
         layer={1}
-        posX={notch}
-        posY={notch * 2}
+        isFill={false}
         section={section}
-        content={
-          logoContent
-        }
       />
-      <Box // LOGO_Meka
+      <BoxTitleBig
+        // key={'titleBox'}
         ref={refTitle}
-        boxWidth={width - logoWidth}
-        boxHeight={boxHeight + notch}
-        strokeWidth={1}
-        content={titleContent}
+        posX={logoWidth + notch * 2}
+        posY={-notch}
+        boxHeight={logoHeight + notch + 8} // still thinks notch is 24, so +8=32
         layer={1}
-        posX={logoRect.width + notch * 2 - 2}
-        posY={-logoRect.height + notch}
+        isFill={false}
         section={section}
+        title={title}
       />
       <Box
-        key={'mainBoxHeight'}
-        boxWidth={titleRect.width}
-        boxHeight={notch * 3}
-        strokeWidth={1}
+        // key={'bgBox'}
+        ref={refBgLogo}
+        boxWidth={titleWidth + notch}
+        boxHeight={notch * 4}
+        posX={logoWidth + notch}
+        posY={logoHeight}
         layer={0}
-        posX={logoRect.width + notch * 2 - 2}
-        posY={-logoRect.height + notch * 2}
-        section="bg"
+        notchSize={notch}
+        section={'bg'}
+      />
+      <Box
+        // key={'subtitleBox'}
+        ref={refSubtitle}
+        boxWidth={'auto'}
+        boxHeight={'auto'}
+        posX={logoWidth + notch * 2}
+        posY={logoHeight + notch * 2}
+        layer={1}
+        isFill={false}
+        section={section}
+        content={
+          <h3 style={{
+            margin: '16px 16px 0px 16px',
+            fontSize: '2rem',
+            color: sectionColor[section],
+            backgroundColor: 'transparent',
+            fontFamily: 'var(--font-display)',
+            lineHeight: '1.5',
+            }}
+          >
+            {subtitle?.toUpperCase() || ''}
+          </h3>
+        }
       />
     </div>
   );
 }
+
+export default forwardRef<HTMLDivElement, LogoSectionProps>(LogoSection);

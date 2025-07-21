@@ -1,8 +1,10 @@
 .logoSection {
-  position: relative;
-  /* display: flex;
-  flex-direction: row; */
-  margin: 0;
+  /* position: static; */
+  /* margin: 0; */
+}
+
+.logoSection > * {
+  /* position: static; */
 }
 
 h1 {

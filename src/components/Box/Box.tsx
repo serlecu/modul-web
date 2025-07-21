@@ -55,7 +55,7 @@ function Box(
     boxWidth,
     boxHeight,
     strokeWidth = 1,
-    notchSize = 32,
+    notchSize = 24,
     content,
     layer = 0,
     posX,
