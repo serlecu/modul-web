@@ -1,5 +1,15 @@
-import React, { useRef, useEffect, useState, forwardRef } from 'react';
+import React, { useRef, useEffect, useState, forwardRef, useLayoutEffect } from 'react';
 import styles from './Box.module.css';
+
+// implementar este enum en vez de clases CSS
+// const sectionColor: Record<string, string> = {
+//   default: 'white',
+//   live: 'blue',
+//   edu: 'green',
+//   comm: 'orange',
+//   bg: 'gray',
+// };
+// const color = sectionColor[section];
 
 interface BoxProps {
   boxWidth: number | 'auto';
@@ -45,7 +55,7 @@ function Box(
     boxWidth,
     boxHeight,
     strokeWidth = 1,
-    notchSize = 16,
+    notchSize = 32,
     content,
     layer = 0,
     posX,
@@ -59,23 +69,33 @@ function Box(
   const [calculatedWidth, setCalculatedWidth] = useState<number | 'auto'>(boxWidth);
   const [calculatedHeight, setCalculatedHeight] = useState<number | 'auto'>(boxHeight);
 
+  // Calculate width and height of box based on setting (auto or not)
+  const numericWidth = (calculatedWidth === 'auto' ? notchSize * 4 : calculatedWidth);
+  const numericHeight = (calculatedHeight === 'auto' ? notchSize * 4 : calculatedHeight);
+
   // Effect to calculate dimensions based on content size. Will only run when
   // boxWidth or boxHeight is 'auto' and contentRef is available.
+  // useLayoutEffect(() => {
   useEffect(() => {
-    if (boxWidth === 'auto' || boxHeight === 'auto' && contentRef.current) {
-      const { offsetWidth, offsetHeight } = contentRef.current!; // Get the size of the content
-      console.log('Offset dimensions:', { offsetWidth, offsetHeight });
-      if (boxWidth === 'auto' && calculatedWidth !== offsetWidth + notchSize) {
-        setCalculatedWidth(offsetWidth + notchSize); // Update Width state
-      }
-      if (boxHeight === 'auto' && calculatedHeight !== offsetHeight + notchSize) {
-        setCalculatedHeight(offsetHeight + notchSize); // Update height state
-      }
+    // if (boxWidth === 'auto' || boxHeight === 'auto' && contentRef.current) {
+    if (contentRef.current) {
+      const updateSize = () => {
+        const { offsetWidth, offsetHeight } = contentRef.current!; // Get the size of the content
+        // console.log('Offset dimensions:', { offsetWidth, offsetHeight });
+        if (boxWidth === 'auto' && calculatedWidth !== offsetWidth + notchSize) {
+          setCalculatedWidth(offsetWidth + notchSize); // Update Width state
+        }
+        if (boxHeight === 'auto' && calculatedHeight !== offsetHeight + notchSize) {
+          setCalculatedHeight(offsetHeight + notchSize); // Update height state
+        }
+      };
+      updateSize(); // Initial size update
+      const resizeObserver = new window.ResizeObserver(updateSize);
+      resizeObserver.observe(contentRef.current);
+      return () => resizeObserver.disconnect();
     }
   }, [boxWidth, boxHeight, notchSize, calculatedWidth, calculatedHeight]);
-  // Calculate width and height of box based on setting (auto or not)
-  const numericWidth = calculatedWidth === 'auto' ? notchSize * 4 : calculatedWidth;
-  const numericHeight = calculatedHeight === 'auto' ? notchSize * 4 : calculatedHeight;
+
 
   // Points for the poligon shape (notched box)
   const points1 = [
@@ -113,8 +133,8 @@ function Box(
         <polygon
           className={polyClass}
           points={points1}
-          fill="#FFFFFFFF"
-          stroke="#000000"
+          fill="#000000"
+          stroke="#FFFFFFFF"
           strokeWidth={strokeWidth}
         />
       </svg>

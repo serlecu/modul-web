@@ -1,9 +1,9 @@
 .notchedBox {
-  position: relative;
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--primary); /* for debug */
+  /*border: 1px solid var(--primary); /* for debug */
 }
 
 .notchedBox > * {
@@ -20,8 +20,8 @@
 .boxContent {
   margin: 0;
   padding: 0;
-  width: fit-content;
-  height: fit-content;
+  /* width: fit-content;
+  height: fit-content; */
 }
 
 .polyDefault {
@@ -98,8 +98,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
   
   fill: var(--bg-primary);
   stroke: var(--accent-section);
