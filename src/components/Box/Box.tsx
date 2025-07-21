@@ -70,18 +70,20 @@ function Box(
   const [calculatedHeight, setCalculatedHeight] = useState<number | 'auto'>(boxHeight);
 
   // Calculate width and height of box based on setting (auto or not)
-  const numericWidth = (calculatedWidth === 'auto' ? notchSize * 4 : calculatedWidth);
-  const numericHeight = (calculatedHeight === 'auto' ? notchSize * 4 : calculatedHeight);
+  // If section is 'bg', always use boxWidth and boxHeight directly
+  const numericWidth = section === 'bg'
+    ? (typeof boxWidth === 'number' ? boxWidth : notchSize * 4)
+    : (calculatedWidth === 'auto' ? notchSize * 4 : calculatedWidth);
+  const numericHeight = section === 'bg'
+    ? (typeof boxHeight === 'number' ? boxHeight : notchSize * 4)
+    : (calculatedHeight === 'auto' ? notchSize * 4 : calculatedHeight);
 
-  // Effect to calculate dimensions based on content size. Will only run when
-  // boxWidth or boxHeight is 'auto' and contentRef is available.
-  // useLayoutEffect(() => {
-  useEffect(() => {
-    // if (boxWidth === 'auto' || boxHeight === 'auto' && contentRef.current) {
+  // Effect to calculate dimensions based on content size, except for section 'bg'
+  useLayoutEffect(() => {
+    if (section === 'bg') return; // Do not measure content for 'bg' section
     if (contentRef.current) {
       const updateSize = () => {
         const { offsetWidth, offsetHeight } = contentRef.current!; // Get the size of the content
-        // console.log('Offset dimensions:', { offsetWidth, offsetHeight });
         if (boxWidth === 'auto' && calculatedWidth !== offsetWidth + notchSize) {
           setCalculatedWidth(offsetWidth + notchSize); // Update Width state
         }
@@ -90,11 +92,11 @@ function Box(
         }
       };
       updateSize(); // Initial size update
-      const resizeObserver = new window.ResizeObserver(updateSize);
+      const resizeObserver = new ResizeObserver(updateSize);
       resizeObserver.observe(contentRef.current);
       return () => resizeObserver.disconnect();
     }
-  }, [boxWidth, boxHeight, notchSize, calculatedWidth, calculatedHeight]);
+  }, [boxWidth, boxHeight, notchSize, calculatedWidth, calculatedHeight, section]);
 
 
   // Points for the poligon shape (notched box)
