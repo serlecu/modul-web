@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Box from '../Box/Box';
 import styles from './Nav.module.css';
-import logo from '../../assets/m.svg';
+import useRectRef from '@/hooks/useRectRef';
+import BoxM from '../pure/BoxM/BoxM';
 
 interface NavProps {
   posX: number;
@@ -26,26 +27,8 @@ export default function Nav({
   scrollSetter,
 }: NavProps) {
   const notch = 8;
-  const logoWidth = 48; // Width in px of the logo (m) inside the box
 
-  const refLogo = useRef<HTMLImageElement>(null);
-  const refSubtitle = useRef<HTMLParagraphElement>(null);
 
-  const [logoRect, setLogoRect] = useState<DOMRect>(emptyDOMRect);
-  const [subtitleRect, setSubtitleRect] = useState<DOMRect>(emptyDOMRect);
-
-  // Content for logo's box
-  // Could also be a link to home page or similar
-  const logoContent = useMemo(() =>
-    (<img
-      src={logo}
-      alt="modul logo"
-      style={{
-        position: 'relative',
-        padding: `${logoWidth * 0.375}px ${logoWidth * 0.125}px ${logoWidth * 0.375}px ${logoWidth * 0.375}px`,
-        width: logoWidth }}
-    />),
-    []);
   // Content for the navigation buttons
   // List of buttons that will be displayed in the navigation bar
   const navButtonsContent = useMemo(() => (
@@ -55,39 +38,9 @@ export default function Nav({
     </ul>
   ), [scrollSetter]);
 
-  useEffect(() => {
-    if (refLogo.current) {
-      const updateRect = () => {
-        const logoRect = refLogo.current!.getBoundingClientRect() || emptyDOMRect;
-        setLogoRect(logoRect);
-      };
-      // Set the initial height
-      updateRect();
-      // Create a ResizeObserver to update the height on resize
-      const resizeLogo = new ResizeObserver(updateRect);
-      resizeLogo.observe(refLogo.current!);
-      return () => {
-        resizeLogo.disconnect();
-      };
-    }
-  }, []);
-
-  useEffect(() => {
-    if (refSubtitle.current) {
-      const updateRect = () => {
-        const subtitleRect = refSubtitle.current!.getBoundingClientRect() || emptyDOMRect;
-        setSubtitleRect(subtitleRect);
-      };
-      // Set the initial height
-      updateRect();
-      // Create a ResizeObserver to update the height on resize
-      const resizeSubtitle = new ResizeObserver(updateRect);
-      resizeSubtitle.observe(refSubtitle.current!);
-      return () => {
-        resizeSubtitle.disconnect();
-      };
-    }
-  }, []);
+  const [logoWidth, logoHeight, logoTop, logoLeft, refLogo] = useRectRef<HTMLDivElement>(100, 100);
+  const [subtitleWidth, subtitleHeight, subtitleTop, subtitleLeft, refSubtitle] = useRectRef<HTMLDivElement>(100, 100);
+  const [buttonsWidth, buttonsHeight, buttonsTop, buttonsLeft, refButtons] = useRectRef<HTMLDivElement>(100, 100);
 
   return (
     <div
@@ -95,65 +48,59 @@ export default function Nav({
       style={{
         left: posX,
         top: posY,
+        width: logoWidth * 2 + subtitleWidth + notch * 2,
+        height: logoHeight + notch,
       }}
     >
-      <Box
-        key={'nav-logo'}
+      <BoxM
         ref={refLogo}
-        boxWidth={'auto'}
-        boxHeight={'auto'}
-        strokeWidth={1}
-        notchSize={notch}
         posX={notch}
         posY={0}
+        logoSize={48}
+        notchSize={notch}
         layer={1}
-        section="default"
-        content={
-          logoContent
-          // <img
-          //   src={logo}
-          //   alt="modul logo"
-          //   style={{
-          //     position: 'relative',
-          //     padding: '18px 6px 18px 18px',
-          //     width: 48 }}
-          // />
-        }
+        isFill={false}
       />
-      <h1
-        ref={refSubtitle}
-        className={styles.subtitle}
-        style={{
-          position: 'relative',
-          top: -(logoRect.height * 0.5) + notch,
-          left: logoRect.right - notch }}
-      >
-        Plataforma de<br />Arte Medial
-      </h1>
       <Box
-        key={'nav-bg-01'}
-        boxWidth={logoRect.width + notch * 2}
+        boxWidth={logoWidth + notch * 2}
         boxHeight={notch * 4}
         strokeWidth={1}
         notchSize={notch}
         posX={0}
-        posY={0 - subtitleRect.height + notch - 2}
+        posY={logoHeight + notch}
         layer={0}
         section="bg"
       />
       <Box
+        ref={refButtons}
         boxWidth={'auto'}
         boxHeight={'auto'}
         strokeWidth={1}
         notchSize={notch}
         posX={notch}
-        posY={0 - subtitleRect.height}
+        posY={logoHeight + notch * 3}
         section="default"
         layer={1}
         content={
           navButtonsContent
         }
       />
+      <div
+        ref={refSubtitle}
+        style={{
+            position: 'absolute',
+            top: (logoHeight * 0.5) - notch,
+            left: logoWidth + notch * 3,
+            width: 'fit-content',
+            height: 'fit-content',
+        }}
+      >
+        <h1
+          className={styles.subtitle}
+        >
+          Plataforma de<br />Arte Medial
+        </h1>
+      </div>
     </div>
   );
 }

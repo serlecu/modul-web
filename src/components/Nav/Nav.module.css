@@ -1,9 +1,6 @@
 .navContainer {
   position: fixed;
   z-index: 99;
-  width: fit-content;
-  height: fit-content;
-  display: inline-block;
 
   border: 1px solid green;
 }
@@ -16,18 +13,12 @@
   width: 'auto';
   height: 'auto';
   margin: 0;
+  padding: 0;
 
   color: aliceblue;
   font-family: var(--family-menu-buttons);
   font-size: 1rem;
   font-weight: 600;
-}
-
-.logo {
-  height: 100%;
-  width: 100%;
-  margin: auto;
-  object-fit: contain;
 }
 
 .subtitle {
@@ -37,7 +28,7 @@
 }
 
 .navButtonsList {
-  position: inherit;
+  /* position: inherit; */
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
