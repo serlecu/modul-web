@@ -39,9 +39,9 @@ function BoxTitleBig(
 ) {
   // const [fontSize, setFontSize] = useState(boxHeight * 0.055);
   const fontSize = boxHeight * 0.055; // Calculate font size based on box height
-  const marTop = fontSize * -4;
+  const marTop = fontSize * -2.5;
   const padRight = 8;
-  const padBot = fontSize * 0.48;
+  const padBot = 0;
   const padLeft = 0;
   const margin = `${marTop}px ${padRight}px ${padBot}px ${padLeft}px`;
   const color = isFill ? 'black' : sectionColor[section];

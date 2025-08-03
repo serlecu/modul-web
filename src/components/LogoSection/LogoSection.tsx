@@ -9,6 +9,7 @@ import { sectionColor } from '../pure/BoxTitleBig/BoxTitleBig';
 interface LogoSectionProps {
   top: number;
   left: number;
+  layer: number;
   title: string;
   section: 'default' | 'live' | 'edu' | 'comm';
   subtitle?: string | null; // Optional subtitle for the logo section
@@ -24,6 +25,7 @@ interface LogoSectionProps {
 function LogoSection({
   top = 0,
   left = 0,
+  layer = 0,
   title = 'modul',
   section = 'default',
   subtitle = null,
@@ -46,19 +48,21 @@ function LogoSection({
       className={styles.logoSection}
       style={{
         position: 'relative',
-        display: 'block',
-        top: top,
-        left: left,
+        zIndex: layer,
+        top: `${top}%`,
+        left: `${left}px`,
+        transform: `translateY(-${top}%)`,
         padding: `${0}px ${0}px`,
         width: `${logoWidth + titleWidth + notch * 2}px`,
-        height: `${logoHeight + subtitleHeight + notch * 3}px`,
+        height: `${logoHeight + subtitleHeight + notch * 4}px`,
+        // border: '1px solid blue',
       }}
     >
       <BoxM
         // key={'logoBox'}
         ref={refLogo}
         posX={notch}
-        posY={0}
+        posY={notch}
         logoSize={98}
         notchSize={notch}
         layer={1}
@@ -69,8 +73,8 @@ function LogoSection({
         // key={'titleBox'}
         ref={refTitle}
         posX={logoWidth + notch * 2}
-        posY={-notch}
-        boxHeight={logoHeight + notch + 8} // still thinks notch is 24, so +8=32
+        posY={0}
+        boxHeight={logoHeight + notch - 8} // still thinks notch is 24, so +8=32
         layer={1}
         isFill={false}
         section={section}
@@ -79,10 +83,10 @@ function LogoSection({
       <Box
         // key={'bgBox'}
         ref={refBgLogo}
-        boxWidth={titleWidth + notch}
+        boxWidth={titleWidth + notch} // Random width for the background box
         boxHeight={notch * 4}
         posX={logoWidth + notch}
-        posY={logoHeight}
+        posY={logoHeight + notch}
         layer={0}
         notchSize={notch}
         section={'bg'}
@@ -93,14 +97,14 @@ function LogoSection({
         boxWidth={'auto'}
         boxHeight={'auto'}
         posX={logoWidth + notch * 2}
-        posY={logoHeight + notch * 2}
+        posY={logoHeight + notch * 3}
         layer={1}
         isFill={false}
         section={section}
         content={
           <h3 style={{
-            margin: '16px 16px 0px 16px',
-            fontSize: '2rem',
+            margin: '16px 0px 8px 16px',
+            fontSize: '1.8rem',
             color: sectionColor[section],
             backgroundColor: 'transparent',
             fontFamily: 'var(--font-display)',

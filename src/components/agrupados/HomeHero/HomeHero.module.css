@@ -1,5 +1,8 @@
 .section {
+  /* position: relative;
   display: inline;
+  width: auto;
+  height: fit-content; */
 
   border: 1px solid yellow;
 }
